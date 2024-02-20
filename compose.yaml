@@ -2,9 +2,27 @@ services:
   mysql:
     image: 'mysql:latest'
     environment:
-      - 'MYSQL_DATABASE=mydatabase'
+      - 'MYSQL_DATABASE=database'
       - 'MYSQL_PASSWORD=secret'
       - 'MYSQL_ROOT_PASSWORD=verysecret'
       - 'MYSQL_USER=myuser'
     ports:
       - '3306'
+    networks:
+      - mynetwork
+
+  phpMyAdmin:
+    image: 'phpmyadmin/phpmyadmin:latest'
+    environment:
+      - 'PMA_HOST=mysql'
+    ports:
+      - '4000:80'
+    networks:
+        - mynetwork
+    depends_on:
+        - mysql
+
+
+networks:
+  mynetwork:
+
